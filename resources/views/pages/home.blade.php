@@ -120,16 +120,26 @@
             <h2 class="section-title mb-4">{{ __('app.services.subtitle') }}</h2>
         </div>
         <!-- Default services when DB empty -->
+        @php
+        $defaultServices = [
+            ['💆‍♀️', 'Hair Treatment', 'Perawatan rambut premium untuk rambut sehat berkilau.', 'Premium hair care for healthy, shiny hair.', 'Rp 150.000'],
+            ['💅', 'Nail Art', 'Nail art eksklusif dengan desain terkini.', 'Exclusive nail art with the latest designs.', 'Rp 75.000'],
+            ['🧖‍♀️', 'Facial Premium', 'Facial wajah untuk kulit glowing sempurna.', 'Facial treatment for perfectly glowing skin.', 'Rp 250.000'],
+            ['✂️', 'Haircut & Style', 'Potong dan styling rambut oleh stylist berpengalaman.', 'Haircut and styling by experienced stylists.', 'Rp 85.000'],
+            ['💆', 'Spa Treatment', 'Paket spa lengkap untuk relaksasi total.', 'Complete spa package for total relaxation.', 'Rp 300.000'],
+            ['👁️', 'Eyelash Extension', 'Ekstensi bulu mata natural hingga dramatic.', 'Natural to dramatic eyelash extensions.', 'Rp 180.000'],
+        ];
+        @endphp
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach([['💆‍♀️','Hair Treatment','Perawatan rambut premium','Rp 150.000'],['💅','Nail Art','Nail art eksklusif','Rp 75.000'],['🧖‍♀️','Facial Premium','Facial wajah mewah','Rp 250.000'],['✂️','Haircut & Style','Potong & styling rambut','Rp 85.000'],['💆','Spa Treatment','Relaksasi total','Rp 300.000'],['👁️','Eyelash','Ekstensi bulu mata','Rp 180.000']] as $svc)
+            @foreach($defaultServices as $svc)
             <div class="card-luxury group cursor-pointer">
                 <div class="h-48 flex items-center justify-center transition-all duration-500" style="background: linear-gradient(135deg, #f4d4c8, #e8c4b8);">
                     <span class="text-6xl">{{ $svc[0] }}</span>
                 </div>
                 <div class="p-6">
                     <h3 class="font-serif text-lg font-semibold mb-2" style="color: #3d2c2c;">{{ $svc[1] }}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">{{ $svc[2] }}</p>
-                    <span class="font-semibold text-sm" style="color: #c9a84c;">{{ __('app.services.price_from') }} {{ $svc[3] }}</span>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-4">{{ app()->getLocale() === 'en' ? $svc[3] : $svc[2] }}</p>
+                    <span class="font-semibold text-sm" style="color: #c9a84c;">{{ __('app.services.price_from') }} {{ $svc[4] }}</span>
                 </div>
             </div>
             @endforeach
