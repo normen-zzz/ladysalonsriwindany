@@ -5,15 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-sparkles';
+
     protected static string|\UnitEnum|null $navigationGroup = 'Manage Content';
 
     public static function form(Schema $schema): Schema

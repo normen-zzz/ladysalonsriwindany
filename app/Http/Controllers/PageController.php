@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
 use App\Models\Gallery;
-use App\Models\Testimonial;
 use App\Models\HomeContent;
+use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Testimonial;
 
 class PageController extends Controller
 {
@@ -17,9 +17,9 @@ class PageController extends Controller
         $homeContent = HomeContent::query()->latest('id')->first();
 
         $heroText = [
-            'title' => $homeContent?->localized('hero_title_id', 'hero_title_en', Setting::get('hero_title_' . app()->getLocale(), __('app.hero.title'))),
-            'title2' => $homeContent?->localized('hero_title2_id', 'hero_title2_en', Setting::get('hero_title2_' . app()->getLocale(), __('app.hero.title2'))),
-            'subtitle' => $homeContent?->localized('hero_subtitle_id', 'hero_subtitle_en', Setting::get('hero_subtitle_' . app()->getLocale(), __('app.hero.subtitle'))),
+            'title' => $homeContent?->localized('hero_title_id', 'hero_title_en', Setting::get('hero_title_'.app()->getLocale(), __('app.hero.title'))),
+            'title2' => $homeContent?->localized('hero_title2_id', 'hero_title2_en', Setting::get('hero_title2_'.app()->getLocale(), __('app.hero.title2'))),
+            'subtitle' => $homeContent?->localized('hero_subtitle_id', 'hero_subtitle_en', Setting::get('hero_subtitle_'.app()->getLocale(), __('app.hero.subtitle'))),
             'badge_title' => $homeContent?->localized('hero_badge_title_id', 'hero_badge_title_en', '5000+ Clients'),
             'badge_subtitle' => $homeContent?->localized('hero_badge_subtitle_id', 'hero_badge_subtitle_en', '★★★★★'),
         ];
@@ -71,18 +71,21 @@ class PageController extends Controller
     public function services()
     {
         $services = Service::where('is_active', true)->orderBy('sort_order')->get();
+
         return view('pages.services', compact('services'));
     }
 
     public function gallery()
     {
         $galleries = Gallery::where('is_active', true)->orderBy('sort_order')->get();
+
         return view('pages.gallery', compact('galleries'));
     }
 
     public function testimonials()
     {
         $testimonials = Testimonial::where('is_active', true)->get();
+
         return view('pages.testimonials', compact('testimonials'));
     }
 
@@ -91,6 +94,7 @@ class PageController extends Controller
         $phone = Setting::get('phone', '6281234567890');
         $address = Setting::get('address', 'Jl. Contoh No. 1, Kota');
         $maps_embed = Setting::get('maps_embed', '');
+
         return view('pages.contact', compact('phone', 'address', 'maps_embed'));
     }
 }

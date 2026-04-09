@@ -19,8 +19,11 @@ class HomeContentResource extends Resource
     protected static ?string $model = HomeContent::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHome;
+
     protected static string|\UnitEnum|null $navigationGroup = 'Manage Content';
+
     protected static ?string $modelLabel = 'Home Dashboard';
+
     protected static ?string $pluralModelLabel = 'Home Dashboard';
 
     public static function form(Schema $schema): Schema
