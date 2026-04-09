@@ -20,7 +20,7 @@
                     <p class="text-gray-600 italic leading-relaxed mb-6">"{{ $t->getReview() }}"</p>
                     <div class="flex items-center space-x-3 pt-4 border-t" style="border-color: #f4d4c8;">
                         @if($t->photo)
-                        <img src="{{ Storage::url($t->photo) }}" alt="{{ $t->name }}" class="w-12 h-12 rounded-full object-cover">
+                        <img src="{{ Storage::disk('s3')->url($t->photo) }}" alt="{{ $t->name }}" class="w-12 h-12 rounded-full object-cover">
                         @else
                         <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(135deg, #f4d4c8, #d4a5a5);">{{ substr($t->name, 0, 1) }}</div>
                         @endif

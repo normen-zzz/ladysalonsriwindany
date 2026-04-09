@@ -31,16 +31,16 @@
                 <!-- Stats -->
                 <div class="grid grid-cols-3 gap-6 mt-16 pt-8 border-t" style="border-color: #f4d4c8;">
                     <div class="text-center">
-                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ __('app.about.stat1_value') }}</div>
-                        <div class="text-xs text-gray-500 mt-1">{{ __('app.about.stat1_label') }}</div>
+                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ $stats[0]['value'] }}</div>
+                        <div class="text-xs text-gray-500 mt-1">{{ $stats[0]['label'] }}</div>
                     </div>
                     <div class="text-center border-x" style="border-color: #f4d4c8;">
-                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ __('app.about.stat2_value') }}</div>
-                        <div class="text-xs text-gray-500 mt-1">{{ __('app.about.stat2_label') }}</div>
+                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ $stats[1]['value'] }}</div>
+                        <div class="text-xs text-gray-500 mt-1">{{ $stats[1]['label'] }}</div>
                     </div>
                     <div class="text-center">
-                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ __('app.about.stat3_value') }}</div>
-                        <div class="text-xs text-gray-500 mt-1">{{ __('app.about.stat3_label') }}</div>
+                        <div class="font-serif text-3xl font-bold" style="color: #3d2c2c;">{{ $stats[2]['value'] }}</div>
+                        <div class="text-xs text-gray-500 mt-1">{{ $stats[2]['label'] }}</div>
                     </div>
                 </div>
             </div>
@@ -48,11 +48,14 @@
             <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
                 <div class="relative">
                     <div class="w-72 h-96 lg:w-96 lg:h-[520px] rounded-[3rem] overflow-hidden shadow-2xl flex items-center justify-center" style="background: linear-gradient(to bottom, #f4d4c8, #d4a5a5);">
-                        <div class="text-center p-8">
-                            <div class="text-8xl mb-4">💆‍♀️</div>
-                            <div class="font-serif text-2xl font-bold" style="color: #3d2c2c;">Premium</div>
-                            <div class="font-serif text-lg" style="color: #c9a84c;">Beauty Care</div>
-                        </div>
+                        @if($homeContent?->hero_image)
+                            <img src="{{ Storage::disk('s3')->url($homeContent->hero_image) }}" alt="{{ $heroText['title'] }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="text-center p-8">
+                                <div class="font-serif text-2xl font-bold" style="color: #3d2c2c;">{{ __('app.site_name') }}</div>
+                                <div class="font-serif text-lg" style="color: #c9a84c;">{{ __('app.tagline') }}</div>
+                            </div>
+                        @endif
                     </div>
                     <!-- Floating badge -->
                     <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 border" style="border-color: #f4d4c8;">
@@ -63,8 +66,8 @@
                                 <div class="w-8 h-8 rounded-full" style="background-color: #f4d4c8;"></div>
                             </div>
                             <div>
-                                <div class="text-xs font-bold" style="color: #3d2c2c;">5000+ Clients</div>
-                                <div class="text-xs text-gray-400">★★★★★</div>
+                                <div class="text-xs font-bold" style="color: #3d2c2c;">{{ $heroText['badge_title'] }}</div>
+                                <div class="text-xs text-gray-400">{{ $heroText['badge_subtitle'] }}</div>
                             </div>
                         </div>
                     </div>
@@ -79,20 +82,20 @@
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
-            <p class="section-subtitle">{{ __('app.services.title') }}</p>
-            <h2 class="section-title mb-4">{{ __('app.services.subtitle') }}</h2>
-            <p class="text-gray-500">{{ __('app.services.description') }}</p>
+            <p class="section-subtitle">{{ $servicesSection['title'] }}</p>
+            <h2 class="section-title mb-4">{{ $servicesSection['subtitle'] }}</h2>
+            <p class="text-gray-500">{{ $servicesSection['description'] }}</p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($services as $service)
             <div class="card-luxury group">
                 @if($service->image)
                 <div class="h-48 overflow-hidden">
-                    <img src="{{ Storage::url($service->image) }}" alt="{{ $service->getTitle() }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <img src="{{ Storage::disk('s3')->url($service->image) }}" alt="{{ $service->getTitle() }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                 </div>
                 @else
                 <div class="h-48 flex items-center justify-center" style="background: linear-gradient(135deg, #f4d4c8, #e8c4b8);">
-                    <span class="text-5xl">✨</span>
+                    <span class="font-serif text-lg" style="color: #3d2c2c;">{{ $service->getTitle() }}</span>
                 </div>
                 @endif
                 <div class="p-6">
@@ -116,33 +119,12 @@
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
-            <p class="section-subtitle">{{ __('app.services.title') }}</p>
-            <h2 class="section-title mb-4">{{ __('app.services.subtitle') }}</h2>
+            <p class="section-subtitle">{{ $servicesSection['title'] }}</p>
+            <h2 class="section-title mb-4">{{ $servicesSection['subtitle'] }}</h2>
+            <p class="text-gray-500">{{ $servicesSection['description'] }}</p>
         </div>
-        <!-- Default services when DB empty -->
-        @php
-        $defaultServices = [
-            ['💆‍♀️', 'Hair Treatment', 'Perawatan rambut premium untuk rambut sehat berkilau.', 'Premium hair care for healthy, shiny hair.', 'Rp 150.000'],
-            ['💅', 'Nail Art', 'Nail art eksklusif dengan desain terkini.', 'Exclusive nail art with the latest designs.', 'Rp 75.000'],
-            ['🧖‍♀️', 'Facial Premium', 'Facial wajah untuk kulit glowing sempurna.', 'Facial treatment for perfectly glowing skin.', 'Rp 250.000'],
-            ['✂️', 'Haircut & Style', 'Potong dan styling rambut oleh stylist berpengalaman.', 'Haircut and styling by experienced stylists.', 'Rp 85.000'],
-            ['💆', 'Spa Treatment', 'Paket spa lengkap untuk relaksasi total.', 'Complete spa package for total relaxation.', 'Rp 300.000'],
-            ['👁️', 'Eyelash Extension', 'Ekstensi bulu mata natural hingga dramatic.', 'Natural to dramatic eyelash extensions.', 'Rp 180.000'],
-        ];
-        @endphp
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($defaultServices as $svc)
-            <div class="card-luxury group cursor-pointer">
-                <div class="h-48 flex items-center justify-center transition-all duration-500" style="background: linear-gradient(135deg, #f4d4c8, #e8c4b8);">
-                    <span class="text-6xl">{{ $svc[0] }}</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-serif text-lg font-semibold mb-2" style="color: #3d2c2c;">{{ $svc[1] }}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">{{ app()->getLocale() === 'en' ? $svc[3] : $svc[2] }}</p>
-                    <span class="font-semibold text-sm" style="color: #c9a84c;">{{ __('app.services.price_from') }} {{ $svc[4] }}</span>
-                </div>
-            </div>
-            @endforeach
+        <div class="max-w-2xl mx-auto text-center bg-gray-50 rounded-2xl p-10">
+            <p class="text-gray-500">{{ $servicesSection['empty_message'] }}</p>
         </div>
         <div class="text-center mt-12">
             <a href="{{ route('services') }}" class="btn-primary">{{ __('app.services.view_all') }}</a>
@@ -155,8 +137,8 @@
 <section class="py-20" style="background-color: #faf7f4;">
     <div class="container mx-auto px-4 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
-            <p class="section-subtitle">{{ __('app.testimonials.title') }}</p>
-            <h2 class="section-title mb-4">{{ __('app.testimonials.subtitle') }}</h2>
+            <p class="section-subtitle">{{ $testimonialsSection['title'] }}</p>
+            <h2 class="section-title mb-4">{{ $testimonialsSection['subtitle'] }}</h2>
         </div>
         @if($testimonials->count() > 0)
         <div class="grid md:grid-cols-3 gap-8">
@@ -166,7 +148,7 @@
                 <p class="text-gray-600 italic leading-relaxed mb-6">"{{ $t->getReview() }}"</p>
                 <div class="flex items-center space-x-3">
                     @if($t->photo)
-                    <img src="{{ Storage::url($t->photo) }}" alt="{{ $t->name }}" class="w-10 h-10 rounded-full object-cover">
+                    <img src="{{ Storage::disk('s3')->url($t->photo) }}" alt="{{ $t->name }}" class="w-10 h-10 rounded-full object-cover">
                     @else
                     <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: linear-gradient(135deg, #f4d4c8, #d4a5a5);">{{ substr($t->name, 0, 1) }}</div>
                     @endif
@@ -178,17 +160,8 @@
             @endforeach
         </div>
         @else
-        <div class="grid md:grid-cols-3 gap-8">
-            @foreach([['Sari W.', 'Pelayanannya luar biasa! Saya sangat puas dengan hasilnya. Tim yang ramah dan profesional.'],['Dewi A.', 'Tempat yang sangat nyaman dan mewah. Produk yang digunakan premium. Recommended banget!'],['Maya R.', 'Hair treatment di sini amazing! Rambut jadi lebih sehat dan berkilau. Pasti balik lagi!']] as $review)
-            <div class="bg-white rounded-2xl p-8 shadow-sm">
-                <div class="mb-4" style="color: #c9a84c;">★★★★★</div>
-                <p class="text-gray-600 italic leading-relaxed mb-6">"{{ $review[1] }}"</p>
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: linear-gradient(135deg, #f4d4c8, #d4a5a5);">{{ substr($review[0], 0, 1) }}</div>
-                    <div class="font-semibold text-sm" style="color: #3d2c2c;">{{ $review[0] }}</div>
-                </div>
-            </div>
-            @endforeach
+        <div class="max-w-2xl mx-auto text-center bg-white rounded-2xl p-10">
+            <p class="text-gray-500">{{ $testimonialsSection['empty_message'] }}</p>
         </div>
         @endif
     </div>
@@ -197,10 +170,10 @@
 <!-- CTA Section -->
 <section class="py-20 text-white" style="background: linear-gradient(to right, #3d2c2c, #1f1515);">
     <div class="container mx-auto px-4 lg:px-8 text-center">
-        <p class="section-subtitle" style="color: #c9a84c;">✦ Reservasi</p>
-        <h2 class="font-serif text-4xl md:text-5xl mb-6">{{ app()->getLocale() === 'en' ? 'Ready for Your' : 'Siap Untuk' }}<br><span class="italic" style="color: #c9a84c;">{{ app()->getLocale() === 'en' ? 'Transformation?' : 'Transformasi Anda?' }}</span></h2>
-        <p class="text-gray-300 mb-10 max-w-xl mx-auto">{{ app()->getLocale() === 'en' ? 'Book your appointment today and experience luxury beauty care.' : 'Buat janji sekarang dan rasakan pengalaman kecantikan yang mewah.' }}</p>
-        <a href="{{ route('contact') }}" class="btn-primary text-base px-10 py-4">{{ __('app.hero.cta') }}</a>
+        <p class="section-subtitle" style="color: #c9a84c;">{{ $cta['badge'] }}</p>
+        <h2 class="font-serif text-4xl md:text-5xl mb-6">{{ $cta['title'] }}<br><span class="italic" style="color: #c9a84c;">{{ $cta['highlight'] }}</span></h2>
+        <p class="text-gray-300 mb-10 max-w-xl mx-auto">{{ $cta['subtitle'] }}</p>
+        <a href="{{ route('contact') }}" class="btn-primary text-base px-10 py-4">{{ $cta['button'] }}</a>
     </div>
 </section>
 @endsection

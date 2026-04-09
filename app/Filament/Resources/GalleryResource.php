@@ -19,7 +19,7 @@ class GalleryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Forms\Components\FileUpload::make('image')->label('Image')->image()->directory('gallery')->required()->columnSpanFull(),
+            Forms\Components\FileUpload::make('image')->label('Image')->image()->disk('s3')->visibility('public')->directory('gallery')->required()->columnSpanFull(),
             Forms\Components\TextInput::make('caption_id')->label('Caption (ID)'),
             Forms\Components\TextInput::make('caption_en')->label('Caption (EN)'),
             Forms\Components\Toggle::make('is_active')->label('Active')->default(true),
@@ -30,7 +30,7 @@ class GalleryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\ImageColumn::make('image')->size(80),
+            Tables\Columns\ImageColumn::make('image')->disk('s3')->size(80),
             Tables\Columns\TextColumn::make('caption_id')->label('Caption (ID)'),
             Tables\Columns\TextColumn::make('caption_en')->label('Caption (EN)'),
             Tables\Columns\ToggleColumn::make('is_active'),

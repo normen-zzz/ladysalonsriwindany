@@ -14,7 +14,7 @@
             <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                 @foreach($galleries as $item)
                 <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 group relative">
-                    <img src="{{ Storage::url($item->image) }}" alt="{{ $item->getCaption() ?? 'Gallery' }}" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <img src="{{ Storage::disk('s3')->url($item->image) }}" alt="{{ $item->getCaption() ?? 'Gallery' }}" class="w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     @if($item->getCaption())
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                         <p class="text-white text-sm font-medium">{{ $item->getCaption() }}</p>

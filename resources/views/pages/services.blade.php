@@ -16,7 +16,7 @@
                 <div class="card-luxury group">
                     @if($service->image)
                     <div class="h-56 overflow-hidden">
-                        <img src="{{ Storage::url($service->image) }}" alt="{{ $service->getTitle() }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <img src="{{ Storage::disk('s3')->url($service->image) }}" alt="{{ $service->getTitle() }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     </div>
                     @else
                     <div class="h-56 flex items-center justify-center transition-opacity duration-300" style="background: linear-gradient(135deg, #f4d4c8, #e8c4b8);">

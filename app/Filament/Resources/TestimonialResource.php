@@ -20,7 +20,7 @@ class TestimonialResource extends Resource
     {
         return $schema->components([
             Forms\Components\TextInput::make('name')->required(),
-            Forms\Components\FileUpload::make('photo')->label('Photo')->image()->directory('testimonials')->avatar(),
+            Forms\Components\FileUpload::make('photo')->label('Photo')->image()->disk('s3')->visibility('public')->directory('testimonials')->avatar(),
             Forms\Components\Select::make('rating')->options([1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5])->default(5),
             Forms\Components\Tabs::make('Reviews')->tabs([
                 Forms\Components\Tabs\Tab::make('Indonesian')->schema([
@@ -37,7 +37,7 @@ class TestimonialResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\ImageColumn::make('photo')->circular()->size(50),
+            Tables\Columns\ImageColumn::make('photo')->disk('s3')->circular()->size(50),
             Tables\Columns\TextColumn::make('name')->searchable(),
             Tables\Columns\TextColumn::make('review_id')->label('Review (ID)')->limit(80),
             Tables\Columns\TextColumn::make('rating')->badge(),
