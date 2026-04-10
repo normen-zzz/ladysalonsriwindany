@@ -1,5 +1,5 @@
 @php
-    $phone = \App\Models\Setting::get('phone', '6281234567890');
+    $phone = \App\Models\Setting::get('whatsapp') ?: \App\Models\Setting::get('phone', '6281234567890');
     $phone = preg_replace('/[^0-9]/', '', $phone);
     if (str_starts_with($phone, '0')) {
         $phone = '62' . substr($phone, 1);

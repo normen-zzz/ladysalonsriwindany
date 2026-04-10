@@ -92,9 +92,10 @@ class PageController extends Controller
     public function contact()
     {
         $phone = Setting::get('phone', '6281234567890');
+        $whatsapp = Setting::get('whatsapp') ?: preg_replace('/[^0-9]/', '', $phone);
         $address = Setting::get('address', 'Jl. Contoh No. 1, Kota');
         $maps_embed = Setting::get('maps_embed', '');
 
-        return view('pages.contact', compact('phone', 'address', 'maps_embed'));
+        return view('pages.contact', compact('phone', 'whatsapp', 'address', 'maps_embed'));
     }
 }
