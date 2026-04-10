@@ -93,7 +93,7 @@ function sendWhatsApp() {
     const name = document.getElementById('cName').value;
     const phone = document.getElementById('cPhone').value;
     const message = document.getElementById('cMessage').value;
-    const waPhone = '{{ preg_replace("/[^0-9]/", "", $phone) }}';
+    const waPhone = '{{ $whatsapp }}';
     const text = encodeURIComponent(`Halo Lady Salon Sri Windany,\n\nNama: ${name}\nTelp: ${phone}\n\nPesan: ${message}`);
     window.open(`https://wa.me/${waPhone}?text=${text}`, '_blank');
 }
